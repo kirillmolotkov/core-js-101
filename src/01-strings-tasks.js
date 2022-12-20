@@ -202,8 +202,11 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  const firstString = `┌${'─'.repeat(width - 2)}┐\n`;
+  const middleStrings = `│${' '.repeat(width - 2)}│\n`.repeat(height - 2);
+  const lastString = `└${'─'.repeat(width - 2)}┘\n`;
+  return firstString + middleStrings + lastString;
 }
 
 /**
@@ -222,8 +225,31 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const lower = 'abcdefghijklmnopqrstuvwxyzabcdefghijklm';
+  const apper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLM';
+  const result = [];
+  for (let i = 0; i < str.length; i += 1) {
+    for (let j = 0; j < lower.length; j += 1) {
+      if (str[i] === lower[j]) {
+        result.push(lower[j + 13]);
+        break;
+      } else if (str[i] === apper[j]) {
+        result.push(apper[j + 13]);
+        break;
+      } else if (str[i] === ' ') {
+        result.push(str[i]);
+        break;
+      } else if (str[i] === '?') {
+        result.push(str[i]);
+        break;
+      } else if (str[i] === '!') {
+        result.push(str[i]);
+        break;
+      }
+    }
+  }
+  return result.join('');
 }
 
 /**
@@ -239,8 +265,8 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  return typeof value === 'string' || value instanceof String;
 }
 
 /**
@@ -267,8 +293,62 @@ function isString(/* value */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const standart52CardDeck = [
+    'A♣',
+    '2♣',
+    '3♣',
+    '4♣',
+    '5♣',
+    '6♣',
+    '7♣',
+    '8♣',
+    '9♣',
+    '10♣',
+    'J♣',
+    'Q♣',
+    'K♣',
+    'A♦',
+    '2♦',
+    '3♦',
+    '4♦',
+    '5♦',
+    '6♦',
+    '7♦',
+    '8♦',
+    '9♦',
+    '10♦',
+    'J♦',
+    'Q♦',
+    'K♦',
+    'A♥',
+    '2♥',
+    '3♥',
+    '4♥',
+    '5♥',
+    '6♥',
+    '7♥',
+    '8♥',
+    '9♥',
+    '10♥',
+    'J♥',
+    'Q♥',
+    'K♥',
+    'A♠',
+    '2♠',
+    '3♠',
+    '4♠',
+    '5♠',
+    '6♠',
+    '7♠',
+    '8♠',
+    '9♠',
+    '10♠',
+    'J♠',
+    'Q♠',
+    'K♠',
+  ];
+  return standart52CardDeck.indexOf(value);
 }
 
 module.exports = {
